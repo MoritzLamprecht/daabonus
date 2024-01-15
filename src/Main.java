@@ -1,8 +1,19 @@
-import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+    public static String calculateColoring(ArrayList<Vertex> vertices, ArrayList<Edge> edges,
+                                           ArrayList<Integer> colors, int degree) {
+        Graph graph = new Graph(degree);
+
+        for (Vertex v : vertices) graph.addVertex(v);
+        for (Edge e : edges) graph.addEdge(e);
+        for (int c : colors) graph.addColor(c);
+
+        int iter = graph.createColoring();
+        return graph.toString();
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -44,7 +55,6 @@ public class Main {
             System.out.println("Something did not work, please try again...");
             System.exit(-1);
         }
-        Graph graph = new Graph(grad);
 
         System.out.println("Now please input all your available colors as integers, same as vertices:\n");
         String colorInput = scanner.nextLine();
@@ -59,12 +69,6 @@ public class Main {
             System.exit(-1);
         }
 
-        for (Vertex v : vertices) graph.addVertex(v);
-        for (Edge e : edges) graph.addEdge(e);
-        for (int c : colors) graph.addColor(c);
-
-        graph.createColoring(3);
-
-        System.out.println(graph.toString());
+        System.out.println(calculateColoring(vertices, edges, colors, grad));
     }
 }

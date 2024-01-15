@@ -7,6 +7,7 @@ public class Graph {
     private ArrayList<Edge> edges = new ArrayList<>();
     private ArrayList<Integer> colors = new ArrayList<>();
     private final int degree;
+    private int iterations = 0;
 
     public Graph(int degree) {
         this.degree = degree;
@@ -73,8 +74,10 @@ public class Graph {
         return colors.get((int) (Math.random() * colors.size()));
     }
 
-    public int createColoring(int iterations) {
-        for (int k = 0; k < iterations; k++) {
+    public int createColoring() {
+        int colored = 0;
+        while(colored < vertices.size()) {
+            iterations++;
             for (Map.Entry<Integer, Vertex> v : vertices.entrySet()) {
                 ArrayList<Integer> neighbors = getNeighborColors(v.getKey());
                 ArrayList<Integer> available = getAvailableColors(neighbors);  // all colors minus neighbor colors
@@ -85,10 +88,11 @@ public class Graph {
             for (Map.Entry<Integer, Vertex> v : vertices.entrySet()) {
                 if (!getNeighborColors(v.getKey()).contains(v.getValue().getCandidateColor())) {  // check if any neighbor selected the same color
                     v.getValue().setPermanentColor(v.getValue().getCandidateColor());  // permanently color this node
+                    colored++;
                 }
             }
         }
-        return 0;
+        return iterations;
     }
 
     @Override
@@ -103,7 +107,7 @@ public class Graph {
             result += "(" + edge.u() + "," + edge.v() + ")";
         }
         result = result.replaceAll(", $", "}");
-        result += "\n\nColoring:\n";
+        result += "\n\nColoring (took " + iterations + " iterations):\n";
 
         for (Map.Entry<Integer, Vertex> entry : vertices.entrySet()) {
             result += entry.getValue().getID() + ": " + entry.getValue().getPermanentColor() + "\n";
