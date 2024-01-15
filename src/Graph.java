@@ -13,7 +13,7 @@ public class Graph {
     }
 
     public void addColor(int color) {
-        colors.add(color);
+        if (colors.size() < degree) colors.add(color);
     }
 
     public ArrayList<Integer> getColors() {
