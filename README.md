@@ -44,6 +44,10 @@ following inputs:
     
     for example: `1,2,3,4,5,6,7,8,9`, adding 9 colors
 
+The program then computes the coloring using a simulated distributed randomized algorithm (the one
+described above) and outputs the coloring to the console, stating which node has which color and also
+the number of iterations needed to color the graph.
+
 ## Testcases
 
 The project contains two testcases for some test graphs, which I included in the regular assignment PDF
